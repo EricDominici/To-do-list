@@ -1,5 +1,6 @@
 body {
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
+font-family: sans-serif;
+}
 *:first-letter {
     text-transform: capitalize;
 }
@@ -66,7 +67,7 @@ input:focus {
     color: #fff;
 }
 .task {
-    background-color: #277fe4;
+    background-color: #3fd3bf;
     padding: 15px;
     margin-top: 15px;
     color: #fff;
@@ -78,9 +79,9 @@ input:focus {
     color: #000;
 }
 .deleteTaskButton {
-    background-color: #3fd3bf;
+    background-color: #e7e7e7;
     border: none;
-    color: white;
+    color: rgb(87, 186, 171);
     font-size: 1em;
     font-weight: bold;
     margin-left: 0.5em;
