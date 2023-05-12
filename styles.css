@@ -1,5 +1,6 @@
 body {
 font-family: sans-serif;
+background-color: rgb(172, 235, 233);
 }
 *:first-letter {
     text-transform: capitalize;
@@ -79,17 +80,31 @@ input:focus {
     color: #000;
 }
 .deleteTaskButton {
-    background-color: #e7e7e7;
+    background-color: rgb(172, 235, 233);
     border: none;
-    color: rgb(87, 186, 171);
-    font-size: 1em;
-    font-weight: bold;
-    margin-left: 0.5em;
-    padding: 0.2em 0.4em;
-    border-radius: 0.2em;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 10px;
+    border-radius: 5px;
     cursor: pointer;
-    float: right; 
-    margin-right: 0.3em;
-    text-align: right;
-
+    position: absolute;
+    right: 270px;
+    
 }
+.completeTaskButton {
+    background-color: rgb(172, 235, 233);
+    border: none;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    right: 315px;
+    
+  
+  }

@@ -34,10 +34,18 @@ const addNewTask = event => {
     const task = document.createElement('div');
     task.classList.add('task', 'roundBorder');
     task.addEventListener('click', changeTaskState)
-    task.innerHTML = `${value} <button class="deleteTaskButton" onclick="deleteTask(event)">x</button>`;
+    task.innerHTML = `${value} 
+    <button class="deleteTaskButton" onclick="deleteTask(event)">x</button>
+    <button class="completeTaskButton" onclick="completeTask(event)">✓</button>`;
     tasksContainer.prepend(task);
     event.target.reset();
 };
+const completeTask = event => {
+    event.stopPropagation(); // evitar que el evento se propague al elemento contenedor
+    const task = event.target.parentNode;
+    task.classList.add('done');
+    setTimeout(() => task.remove(), 1000); // eliminar la tarea después de 1 segundo
+  };
 /*Esta función cambia la clase de estilo de el elemento div de la tarea al hacer clic en él, para hacerlo parecer completado o no completado. */
 
 const changeTaskState = event => {
