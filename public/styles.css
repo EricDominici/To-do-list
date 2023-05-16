@@ -7,6 +7,7 @@ background-color: rgb(172, 235, 233);
 }
 .roundBorder {
     border-radius: 5px;
+   
 }
 .list {
     margin: 25px auto;
@@ -42,6 +43,8 @@ form {
     grid-auto-flow: column;
     grid-template-columns: auto 35px auto;
     grid-column-gap: 15px;
+    grid-gap: 50px;
+
 }
 input {
     border: none;
@@ -63,10 +66,12 @@ input:focus {
     border-radius: 50%;
     font-size: 18px;
     background-color: #e7e7e7;
+    
 }
 .orderButton {
     background-color: #3fd3bf;
     color: #fff;
+    
 }
 .task {
     background-color: #3fd3bf;
@@ -74,24 +79,42 @@ input:focus {
     margin-top: 15px;
     color: #fff;
     cursor: pointer;
-    
+    width: 92%;
+    display: flex;
+    justify-content: space-between;
 }
 .done {
     background-color: #e7e7e7;
     text-decoration: line-through;
     color: #000;
+    display: flex;
+    justify-content: flex-start;
 }
+
+.buttonsContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: baseline;
+    align-content: space-around;
+}
+.buttonsContainerTask{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
 .deleteTaskButton {
     background-color: rgb(172, 235, 233);
     border: none;
     color: rgb(0, 0, 0);
     text-decoration: none;
-    display: inline-block;
+    display: flex;
     font-size: 16px;
     margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
-    position: absolute;
     right: 40.3%;
     
 }
@@ -100,13 +123,11 @@ input:focus {
     border: none;
     color: rgb(255, 255, 255);
     text-decoration: none;
-    display: inline-block;
+    display: flex;
     font-size: 16px;
     margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
-    position: absolute;
     right: 42%;
-    
   
   }

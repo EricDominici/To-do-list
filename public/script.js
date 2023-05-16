@@ -1,7 +1,10 @@
+
 const dateNumber = document.getElementById('dateNumber');
 const dateText = document.getElementById('dateText');
 const dateMonth = document.getElementById('dateMonth');
 const dateYear = document.getElementById('dateYear');
+
+
 
 // Contenedor
 const tasksContainer = document.getElementById('tasksContainer');
@@ -18,8 +21,6 @@ const setDate = () => {
 tambien crea un nuevo elemento div con el valor del campo de texto y lo agrega a la lista de tareas. 
 También borra el contenido del campo de texto del formulario, para hacer una nieva tarea. */
 
-
-
 const addNewTask = event => {
     event.preventDefault();
     const { value } = event.target.taskText;
@@ -29,22 +30,30 @@ const addNewTask = event => {
     task.classList.add('task', 'roundBorder');
     task.addEventListener('click', changeTaskState);
     task.innerHTML = `${truncatedValue} 
+    <div class="buttonsContainerTask">
     <button class="deleteTaskButton" onclick="deleteTask(event)">x</button>
-    <button class="completeTaskButton" onclick="completeTask(event)">✓</button>`;
+    <button class="completeTaskButton" onclick="completeTask(event)">✓</button>
+    </div>`;
     tasksContainer.prepend(task);
     event.target.reset();
 };
 
+let completedTasks = [];
+let deletedTasks = [];
 const deleteTask = event => {
     event.stopPropagation(); // evitar que el evento se propague al elemento contenedor
-    event.target.parentNode.remove();
+    const task = event.target.closest('.task');
+    deletedTasks.push(task); // añadir la tarea eliminada al array de tareas eliminadas
+    task.remove();
 };
+
 const completeTask = event => {
     event.stopPropagation(); // evitar que el evento se propague al elemento contenedor
-    const task = event.target.parentNode;
+    const task = event.target.closest('.task');
     task.classList.add('done');
-    setTimeout(() => task.remove(), 1000); // eliminar la tarea después de 1 segundo
-  };
+    completedTasks.push(task); // añadir la tarea completada al array de tareas completadas
+    task.remove(); 
+};
 /*Esta función cambia la clase de estilo de el elemento div de la tarea al hacer clic en él, para hacerlo parecer completado o no completado. */
 
 const changeTaskState = event => {
