@@ -1,7 +1,3 @@
-/*  aqui creamos varias constantes que obtienen elementos del DOM 
-con el método getElementById. 
-Los elementos que se obtienen son un número de fecha, un texto de fecha, un mes de fecha, un año de fecha y un contenedor de tareas. */
-
 const dateNumber = document.getElementById('dateNumber');
 const dateText = document.getElementById('dateText');
 const dateMonth = document.getElementById('dateMonth');
@@ -22,23 +18,26 @@ const setDate = () => {
 tambien crea un nuevo elemento div con el valor del campo de texto y lo agrega a la lista de tareas. 
 También borra el contenido del campo de texto del formulario, para hacer una nieva tarea. */
 
-const deleteTask = event => {
-    event.stopPropagation(); // evitar que el evento se propague al elemento contenedor
-    event.target.parentNode.remove();
-};
+
 
 const addNewTask = event => {
     event.preventDefault();
     const { value } = event.target.taskText;
-    if(!value) return;
+    if (!value) return;
+    const truncatedValue = value.length > 30 ? value.substring(30, 0) + '...' : value;
     const task = document.createElement('div');
     task.classList.add('task', 'roundBorder');
-    task.addEventListener('click', changeTaskState)
-    task.innerHTML = `${value} 
+    task.addEventListener('click', changeTaskState);
+    task.innerHTML = `${truncatedValue} 
     <button class="deleteTaskButton" onclick="deleteTask(event)">x</button>
     <button class="completeTaskButton" onclick="completeTask(event)">✓</button>`;
     tasksContainer.prepend(task);
     event.target.reset();
+};
+
+const deleteTask = event => {
+    event.stopPropagation(); // evitar que el evento se propague al elemento contenedor
+    event.target.parentNode.remove();
 };
 const completeTask = event => {
     event.stopPropagation(); // evitar que el evento se propague al elemento contenedor
@@ -65,6 +64,4 @@ const order = () => {
 const renderOrderedTasks = () => {
     order().forEach(el => tasksContainer.appendChild(el))
 }
-
-
 setDate();
