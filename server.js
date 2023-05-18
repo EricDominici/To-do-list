@@ -13,7 +13,6 @@ mongoose.connect(uri,
 )
   .then(() => console.log('Base de datos conectada'))
   .catch(e => console.log(e))
-git 
 const Cat = mongoose.model('Cat', { name: String });
 
 const kitty = new Cat({ name: 'Zildjian' });
