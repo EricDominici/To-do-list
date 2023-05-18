@@ -69,7 +69,7 @@ const addNewTask = event => {
     event.stopPropagation();
     const task = event.target.closest('.task');
     task.classList.add('done');
-  
+
     // Obtener el texto de la tarea completada
     const completedTaskText = task.textContent.trim();
   
@@ -80,7 +80,6 @@ const addNewTask = event => {
     // Imprimir el texto de la tarea completada
     console.log("Texto de la tarea completada:", completedTaskText);
   };
-  
   
 /* Esta función cambia la clase de estilo de el elemento div de la tarea al hacer clic en él, para hacerlo parecer completado o no completado. */
 const changeTaskState = event => {
