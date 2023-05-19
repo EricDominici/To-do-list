@@ -19,7 +19,7 @@ const kitty = new Cat({ name: 'Zildjian' });
 kitty.save().then(() => console.log('meow'));
 
 
-app.get('/', (req, res) => { res.send('Mi respuesta desde express')
+app.get('/tarea', (req, res) => { res.send('Mi respuesta desde express')
 
 })
 app.use(express.static(__dirname + "/public"))
