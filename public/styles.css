@@ -10,10 +10,14 @@ background-image:url("https://images.unsplash.com/photo-1619512949556-0c7282c757
     border-radius: 5px;
    
 }
+.newTaskText {
+    color:  #646058 ;
+  }
+
 .list {
     margin: 25px auto;
     padding: 25px;
-    background-color: 3;
+    background-color: #cec7c9 ;
     width: 100%;
     max-width: 350px;
 }
@@ -21,6 +25,7 @@ background-image:url("https://images.unsplash.com/photo-1619512949556-0c7282c757
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color:  #3a392b ;
 }
 .dateRight {
     display: flex;
@@ -37,6 +42,7 @@ background-image:url("https://images.unsplash.com/photo-1619512949556-0c7282c757
 #dateNumber,
 #dateText  {
     font-weight: bold;
+
 }
 form {
     margin: 20px 0;
@@ -50,7 +56,7 @@ form {
 input {
     border: none;
     padding-left: 10px;
-    background-color: #e7e7e7;
+    background-color:  #a3a49e ;
 }
 input:focus {
     outline: none;
@@ -66,31 +72,35 @@ input:focus {
     height: 35px;
     border-radius: 50%;
     font-size: 18px;
-    background-color: #e7e7e7;
+    background-color:  #a3a49e ;
     
 }
 .orderButton {
-    background-color: #3fd3bf;
-    color: #fff;
+    background-color: #73746b ;
+    color:  #cec7c9  ;
     
 }
 .task {
-    background-color: #3fd3bf;
+    background-color: #a3a49e ;
     padding: 15px;
     margin-top: 15px;
-    color: #fff;
+    color:   #3a392b ;
     cursor: pointer;
     width: 92%;
     display: flex;
     justify-content: space-between;
 }
+
 .done {
-    background-color: #e7e7e7;
+    background-color:     #3a392b   ;
     text-decoration: line-through;
-    color: #000;
+    color:  #cec7c9 ;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    
 }
+
 
 .buttonsContainer{
     display: flex;
@@ -107,28 +117,26 @@ input:focus {
 }
 
 .deleteTaskButton {
-    background-color: rgb(172, 235, 233);
+    background-color: #73746b;
     border: none;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    display: flex;
+    color: #cec7c9;
+    text-decoration: none; 
     font-size: 16px;
     margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
     right: 40.3%;
-    
 }
+
 .completeTaskButton {
-    background-color: rgb(172, 235, 233);
+    background-color: #73746b;
     border: none;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
+    color: #cec7c9;
+    text-decoration: none; 
     display: flex;
     font-size: 16px;
     margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
     right: 42%;
-  
-  }
+}
