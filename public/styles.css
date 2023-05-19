@@ -1,7 +1,8 @@
 body {
 font-family: sans-serif;
-background-image:url("file:///Users/Ericdominici/Documents/To-do%20list/public/fondotodo.jpg");
-background-color: #3a392b;
+background-image:url("https://github.com/EricDominici/To-do-list/blob/main/public/fondotodo.jpg?raw=true");
+
+background-size: cover;
 
 }
 *:first-letter {
@@ -12,13 +13,13 @@ background-color: #3a392b;
    
 }
 .newTaskText {
-    color:  #3a392b;
+    color:   #302a1a;
   }
 
 .list {
     margin: 25px auto;
     padding: 25px;
-    background-color: #cec7c9 ;
+    background-color:  #c4c3b6 ;
     width: 100%;
     max-width: 350px;
 }
@@ -26,7 +27,7 @@ background-color: #3a392b;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color:  #3a392b ;
+    color:   #302a1a  ;
 }
 .dateRight {
     display: flex;
@@ -57,7 +58,9 @@ form {
 input {
     border: none;
     padding-left: 10px;
-    background-color:  #a3a49e ;
+    background-color:   #4d536b   ;
+   
+
 }
 input:focus {
     outline: none;
@@ -73,12 +76,12 @@ input:focus {
     height: 35px;
     border-radius: 50%;
     font-size: 18px;
-    background-color:  #a3a49e ;
-    
+    background-color:   #4d536b ;
+    color: ;
 }
 .orderButton {
-    background-color: #73746b ;
-    color:  #cec7c9  ;
+    background-color: #282317  ;
+    color:   #c4c3b6   ;
     
 }
 .task {
