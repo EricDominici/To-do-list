@@ -139,6 +139,7 @@ input:focus {
     border-radius: 5px;
     cursor: pointer;
     right: 40.3%;
+    
 }
 
 .completeTaskButton {
@@ -153,3 +154,27 @@ input:focus {
     cursor: pointer;
     right: 42%;
 }
+/* Estilos para el botón "Add Task" */
+.addTaskButton:hover {
+    background-color: #6b4734;
+    color: #bdaea1;
+  }
+  
+  /* Estilos para el botón "Order" */
+  .orderButton:hover {
+    background-color: #341c0f;
+    color: #bdaea1;
+  }
+  
+  /* Estilos para el botón "Delete Task" */
+  .deleteTaskButton:hover {
+    background-color: #ec3f3f;
+    color: #f0ddd4;
+  }
+  
+  /* Estilos para el botón "Complete Task" */
+  .completeTaskButton:hover {
+    background-color: #658e41;
+    color: #f0ddd4;
+  }
+  

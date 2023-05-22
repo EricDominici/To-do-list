@@ -9,6 +9,9 @@ let taskText = ''; // Variable para almacenar el texto de la tarea
 
 // Contenedor
 const tasksContainer = document.getElementById('tasksContainer');
+tasksContainer.style.height = '500px'; // Establece una altura fija, ajusta el valor según sea necesario
+tasksContainer.style.overflowY = 'auto'; // Habilita el desplazamiento vertical cuando el contenido excede la altura establecida
+
 
 /* Esta función crea un objeto Date, esta función actualiza la fecha y hora en la página. */
 const setDate = () => {
@@ -18,7 +21,6 @@ const setDate = () => {
   dateMonth.textContent = date.toLocaleString('es', { month: 'short' });
   dateYear.textContent = date.toLocaleString('es', { year: 'numeric' });
 };
-
 /* La función addNewTask se ejecuta cuando se envía el formulario con un campo.
 También crea un nuevo elemento div con el valor del campo de texto y lo agrega a la lista de tareas.
 También borra el contenido del campo de texto del formulario, para hacer una nueva tarea. */
