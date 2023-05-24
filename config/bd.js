@@ -1,15 +1,19 @@
+
 const mongoose = require('mongoose');
-require('dotenv').config({path: 'variable.env'})
+ngoose = require('mongoose');
+require('dotenv').config({ path: 'variable.env' });
+
 const conectarBD = async () => {
-    try {
-        await mongoose.connect(process.env.{
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-        console.log("Bases de dato conectada");
-    } catch (error) {
-        console.log(error);
-        process.exit(1);//detenemos la app
-    }
-}
+  try {
+    await mongoose.connect(process.env.DB_MONGO, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Base de datos conectada");
+  } catch (error) {
+    console.log(error);
+    process.exit(1); // Detenemos la aplicación
+  }
+};
+
 module.exports = conectarBD;

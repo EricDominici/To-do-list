@@ -11,45 +11,47 @@ exports.createTask = async(req, res) => {//crear las tareas
 
     }
 }
-exports.getTaks = async (req, res) => {//traer las tareas, get
-    try {
-      //create product
-      const product = await Product.find();
-      res.json(product);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("There was an error in the data");
-    }
-  };
+exports.getTasks = async (req, res) => {
+  try {
+    const tasks = await taskSchema.find();
+    res.json(tasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Ha ocurrido un error en el servidor.");
+  }
+};
 
-  exports.deleteProduct = async (req, res) => {
-    try {
-      let taks = await Product.findById(req.params.id);
-      if (!taks) {
-        res.status(404).json({ mgs: "The product does not exist "});
-      }
-      await Product.findByIdAndRemove({_id: req.params.id})
-      res.json({msg: "Producto eliminado con existo"})
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("There was an error in the data");
+
+exports.deleteTask = async (req, res) => {
+  try {
+    let task = await taskSchema.findById(req.params.taskId);
+    if (!task) {
+      res.status(404).json({ msg: "La tarea no existe." });
     }
-  };
-//   exports.udateProduct = async (req, res) => {
-//     try {
-//       //create product
-//       const { text } = req.body;
-//       let taksUpdate = await TaksShemman.findById(req.params.id);
-//       if (!taksUpdate) {
-//         res.status(404).json({ mgs: “The product does not exist” });
-//       }
-//       taks.text = nombre;
-//      taksUpdate = await TaksShemman.findByIdAndUpdate({ _id: req.params.id }, taksUpdate, {
-//         new: true,
-//       });
-//       res.json(product);
-//     } catch (error) {
-//       console.log(error);
-//       res.status(500).send(“There was an error in the data”);
-//     }
-//   }; 
+    await taskSchema.findByIdAndRemove({ _id: req.params.taskId });
+    res.json({ msg: "Tarea eliminada exitosamente." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Ha ocurrido un error en el servidor.");
+  }
+};
+
+exports.updateTask = async (req, res) => {
+  try {
+    let task = await taskSchema.findById(req.params.taskId);
+    if (!task) {
+      res.status(404).json({ msg: "La tarea no existe." });
+    }
+    task.text = req.body.text;
+    task = await task.save();
+    res.json(task);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Ha ocurrido un error en el servidor.");
+  }
+};
+
+
+
+
+

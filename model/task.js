@@ -9,4 +9,4 @@ const taskSchema = new mongoose.Schema({
     default: false
   }
 });
-module.exports = mongoose.model("Task", taskSchema);t
+module.exports = mongoose.model("Task", taskSchema);

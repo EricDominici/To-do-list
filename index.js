@@ -7,10 +7,11 @@ const app = express();
 conectarDB();
 //middelewares
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+
 //Router
-app.use('/api/product', require('./router/Taks'));
+app.use('/api/taks', require('./router/task'));
 app.get('/', function (req, res) {
   res.send('Hola mundo:mariposa:');
 });
