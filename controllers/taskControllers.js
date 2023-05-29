@@ -7,13 +7,13 @@ exports.createTask = async(req, res) => {//crear las tareas
         res.send(task);     
     }catch(error){
         console.log(error);
-        res.status(500).send("te jodite");
+        res.status(500).send("La tarea no creada");
 
     }
 }
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await taskSchema.find();
+    const tasks = await taskSchema._id();
     res.json(tasks);
   } catch (error) {
     console.log(error);
@@ -28,7 +28,8 @@ exports.deleteTask = async (req, res) => {
     if (!task) {
       res.status(404).json({ msg: "La tarea no existe." });
     }
-    await taskSchema.findByIdAndRemove({ _id: req.params.taskId });
+   await taskSchema.findByIdAndRemove(req.params.taskId);
+
     res.json({ msg: "Tarea eliminada exitosamente." });
   } catch (error) {
     console.log(error);

@@ -1,8 +1,19 @@
 const express = require('express');
+
+
+
 const conectarDB = require('./config/bd');
 
 //servidor
 const app = express();
+const port = 3000;
+
+
+app.use(express.static('public'));
+
+app.listen(port, () => {
+  console.log(`Servidor web escuchando en el puerto ${port}`);
+});
 //conection ala Base Datos
 conectarDB();
 //middelewares
@@ -11,7 +22,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 //Router
-app.use('/api/taks', require('./router/task'));
+app.use('/api', require('./router/task'));
 app.get('/', function (req, res) {
   res.send('Hola mundo:mariposa:');
 });

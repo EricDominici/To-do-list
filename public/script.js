@@ -9,8 +9,12 @@ let taskText = ''; // Variable para almacenar el texto de la tarea
 
 // Contenedor
 const tasksContainer = document.getElementById('tasksContainer');
-tasksContainer.style.height = '500px'; // Establece una altura fija, ajusta el valor según sea necesario
-tasksContainer.style.overflowY = 'auto'; // Habilita el desplazamiento vertical cuando el contenido excede la altura establecida
+const taskForm = document.getElementById('taskForm');
+
+tasksContainer.style.maxHeight = '480px';
+tasksContainer.style.overflowY = 'auto';
+
+// Habilita el desplazamiento vertical cuando el contenido excede la altura establecida
 
 
 /* Esta función crea un objeto Date, esta función actualiza la fecha y hora en la página. */
@@ -25,7 +29,7 @@ const setDate = () => {
 También crea un nuevo elemento div con el valor del campo de texto y lo agrega a la lista de tareas.
 También borra el contenido del campo de texto del formulario, para hacer una nueva tarea. */
 const addNewTask = event => {
-    event.preventDefault();
+  event.preventDefault();
     const { value } = event.target.taskText;
     if (!value) return;
     const truncatedValue = value.length > 35 ? value.substring(35, 0) + '...' : value;
@@ -50,6 +54,7 @@ const addNewTask = event => {
     // Agregar tarea al arreglo de tareas incompletas
     toDoTasks.push(taskObj);
     console.log(deletedTasks);
+    tasksContainer.scrollTop = tasksContainer.scrollHeight;
   };
   
   const deleteTask = event => {
@@ -65,7 +70,9 @@ const addNewTask = event => {
   
     // Imprimir el texto de la tarea eliminada
     console.log("Texto de la tarea eliminada:", deletedTaskText);
+    tasksContainer.scrollTop = 0;
   };
+  
   
   const completeTask = event => {
     event.stopPropagation();
@@ -81,6 +88,7 @@ const addNewTask = event => {
   
     // Imprimir el texto de la tarea completada
     console.log("Texto de la tarea completada:", completedTaskText);
+    tasksContainer.scrollTop = 0;
   };
   
 /* Esta función cambia la clase de estilo de el elemento div de la tarea al hacer clic en él, para hacerlo parecer completado o no completado. */
@@ -103,3 +111,8 @@ const renderOrderedTasks = () => {
     order().forEach(el => tasksContainer.appendChild(el))
 }
 setDate();
+
+tasksContainer.addEventListener('resize', () => {
+  // Desplazar el contenedor de tareas hacia abajo cuando se cambia el tamaño
+  tasksContainer.scrollTop = tasksContainer.scrollHeight;
+});
