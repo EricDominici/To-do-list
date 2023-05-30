@@ -31,7 +31,7 @@ También borra el contenido del campo de texto del formulario, para hacer una nu
 const addNewTask = event => {
   event.preventDefault();
   const { value } = event.target.taskText;
-  if (!value) return;
+  if (!value) return; // Verifica si el valor del campo de texto está vacío. Si es así, retorna sin hacer nada.
   const truncatedValue = value.length > 35 ? value.substring(35, 0) + '...' : value;
 
   // objeto para almacenar el texto y el estado de la tarea
@@ -40,50 +40,81 @@ const addNewTask = event => {
     completed: false
   };
   
+  // POST guarda
+  fetch('/api/tasksPost', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(taskObj)
+  })
+  .then(response => response.json())
+  .then(savedTask => {
+    const task = document.createElement('div');
+    task.classList.add('task', 'roundBorder');
+    task.addEventListener('click', changeTaskState);
+    task.innerHTML = `${truncatedValue} 
+      <div class="buttonsContainerTask">
+      <button class="deleteTaskButton" onclick="deleteTask(event)">x</button>
+      <button class="completeTaskButton" onclick="completeTask(event)">✓</button>
+      </div>`;
+    tasksContainer.prepend(task); // Agrega la nueva tarea al comienzo del contenedor de tareas.
+    event.target.reset(); //Borra el contenido del input del formulario para ingresar una nueva tarea.
 
-  const task = document.createElement('div');
-  task.classList.add('task', 'roundBorder');
-  task.addEventListener('click', changeTaskState);
-  task.innerHTML = `${truncatedValue} 
-    <div class="buttonsContainerTask">
-    <button class="deleteTaskButton" onclick="deleteTask(event)">x</button>
-    <button class="completeTaskButton" onclick="completeTask(event)">✓</button>
-    </div>`;
-  tasksContainer.prepend(task); // Agrega la nueva tarea al comienzo del contenedor de tareas.
-  event.target.reset(); //Borra el contenido del input del formulario para ingresar una nueva tarea.
+    // Agregar tarea al arreglo de tareas incompletas
+    toDoTasks.push(savedTask);
+    console.log(deletedTasks);
+    tasksContainer.scrollTop = tasksContainer.scrollHeight;
 
-  // Agregar tarea al arreglo de tareas incompletas
-  toDoTasks.push(taskObj);
-  console.log(deletedTasks);
-  tasksContainer.scrollTop = tasksContainer.scrollHeight;
-
-  // Ordenar automáticamente las tareas
-  renderOrderedTasks();
+    // Ordenar automáticamente las tareas
+    renderOrderedTasks();
+  })
+  .catch(error => {
+    console.log(error);
+    // Handle error
+  });
 };
 
 const deleteTask = event => {
   event.stopPropagation();
   const task = event.target.closest('.task');
+  if (!task) return; // Verifica si el elemento de tarea es válido. Si no es válido, retorna sin hacer nada.
 
   // Obtener el texto de la tarea eliminada
   const deletedTaskText = task.textContent.trim();
 
   // Añadir el texto de la tarea eliminada al arreglo de tareas eliminadas
   deletedTasks.push(deletedTaskText);
-  task.remove();
 
-  // Imprimir el texto de la tarea eliminada
-  console.log("Texto de la tarea eliminada:", deletedTaskText);
-  tasksContainer.scrollTop = 0;
+  // Enviar solicitud DELETE para eliminar la tarea de la base de datos
+  const taskId = task.dataset.taskId; // Suponiendo que establezca el ID de la tarea como un atributo de datos en el elemento de la tarea
+  fetch(`/api/tasksDelete/${taskId}`, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if (response.ok) {
+      task.remove();
 
-  // Ordenar automáticamente las tareas
-  renderOrderedTasks();
+      // Imprimir el texto de la tarea eliminada
+      console.log("Texto de la tarea eliminada:", deletedTaskText);
+      tasksContainer.scrollTop = 0;
+
+      // Ordenar automáticamente las tareas
+      renderOrderedTasks();
+    } else {
+      throw new Error('Failed to delete task');
+    }
+  })
+  .catch(error => {
+    console.log(error);
+    // Handle error
+  });
 };
 
 const completeTask = event => {
   event.stopPropagation();
   const task = event.target.closest('.task');
-  task.classList.toggle('done'); // Cambia el estado de estilo de la tarea
+  if (!task) return; // Verifica si el elemento de tarea es válido. Si no es válido, retorna sin hacer nada
 
   // Obtener el texto de la tarea completada
   const completedTaskText = task.textContent.trim();
@@ -91,12 +122,28 @@ const completeTask = event => {
   // Añadir el texto de la tarea completada al arreglo de tareas completadas
   completedTasks.push(completedTaskText);
 
-  // Imprimir el texto de la tarea completada
-  console.log("Texto de la tarea completada:", completedTaskText);
-  tasksContainer.scrollTop = 0;
+  // Enviar solicitud PUT para actualizar la tarea como completada en la base de datos
+  const taskId = task.dataset.taskId; //Envíe una solicitud PUT para actualizar la tarea como completada en la base de datos Suponiendo que establezca el ID de la tarea como un atributo de datos en el elemento de la tarea
+  fetch(`/api/taskss/${taskId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ text: completedTaskText, completed: true })
+  })
+  .then(response => response.json())
+  .then(updatedTask => {
+    // Imprimir el texto de la tarea completada
+    console.log("Texto de la tarea completada:", completedTaskText);
+    tasksContainer.scrollTop = 0;
 
-  // Ordenar automáticamente las tareas
-  renderOrderedTasks();
+    // Ordenar automáticamente las tareas
+    renderOrderedTasks();
+  })
+  .catch(error => {
+    console.log(error);
+    // Handle error
+  });
 };
 
 /* Esta función ordena visualmente las tareas incompletas al principio y las completadas al final en el contenedor de tareas,  */
@@ -115,6 +162,94 @@ const renderOrderedTasks = () => {
   // Agregar las tareas incompletas y completadas en el orden correcto
   toDo.forEach(task => tasksContainer.appendChild(task));
   done.forEach(task => tasksContainer.appendChild(task));
+};
+
+
+
+// Al cargar la página, obtener las tareas completadas y eliminadas de la base de datos
+window.addEventListener('DOMContentLoaded', () => {
+  // Obtener tareas completadas
+  fetch('/api/tasksGest')
+    .then(response => response.json())
+    .then(tasks => {
+      completedTasks = tasks.map(task => task.text);
+      // Actualizar la lista de tareas completadas en el frontend
+      renderCompletedTasks();
+    })
+    .catch(error => {
+      console.log(error);
+      // Handle error
+    });
+
+  // Obtener tareas eliminadas
+  fetch('/api/deletedTasks')
+    .then(response => response.json())
+    .then(tasks => {
+      deletedTasks = tasks.map(task => task.text);
+      // Actualizar la lista de tareas eliminadas en el frontend
+      renderDeletedTasks();
+    })
+    .catch(error => {
+      console.log(error);
+      // Handle error
+    });
+
+  // Obtener tareas incompletas (tareas pendientes)
+  fetch('/api/tasksGest')
+    .then(response => response.json())
+    .then(tasks => {
+      toDoTasks = tasks.filter(task => !task.completed);
+      // Actualizar la lista de tareas incompletas en el frontend
+      renderToDoTasks();
+    })
+    .catch(error => {
+      console.log(error);
+      // Handle error
+    });
+});
+
+// La función renderCompletedTasks renderiza las tareas completadas en el frontend
+
+// La función renderCompletedTasks renderiza las tareas completadas en el modal
+const renderCompletedTasks = () => {
+  const completedTasksContainer = document.getElementById('completedTasksContainer');
+  completedTasksContainer.innerHTML = '';
+
+  completedTasks.forEach(taskText => {
+    const task = document.createElement('div');
+    task.classList.add('task', 'roundBorder', 'done');
+    task.innerHTML = `${taskText}`;
+    completedTasksContainer.appendChild(task);
+  });
+};
+
+// La función renderDeletedTasks renderiza las tareas eliminadas en el modal
+const renderDeletedTasks = () => {
+  const deletedTasksContainer = document.getElementById('deletedTasksContainer');
+  deletedTasksContainer.innerHTML = '';
+
+  deletedTasks.forEach(taskText => {
+    const task = document.createElement('div');
+    task.classList.add('task', 'roundBorder', 'deleted');
+    task.innerHTML = `${taskText}`;
+    deletedTasksContainer.appendChild(task);
+  });
+};
+// La función renderToDoTasks renderiza las tareas incompletas (tareas pendientes) en el frontend
+const renderToDoTasks = () => {
+  toDoTasks.forEach(task => {
+    const truncatedValue = task.text.length > 35 ? task.text.substring(35, 0) + '...' : task.text;
+    const taskElement = document.createElement('div');
+    taskElement.classList.add('task', 'roundBorder');
+    taskElement.addEventListener('click', changeTaskState);
+    taskElement.innerHTML = `${truncatedValue} 
+      <div class="buttonsContainerTask">
+      <button class="deleteTaskButton" onclick="deleteTask(event)">x</button>
+      <button class="completeTaskButton" onclick="completeTask(event)">✓</button>
+      </div>`;
+    taskElement.dataset.taskId = task._id; // Asignar el ID de la tarea como atributo de datos en el elemento de tarea
+    tasksContainer.appendChild(taskElement);
+  });
 };
 
 /* Esta función cambia la clase de estilo de el elemento div de la tarea al hacer clic en él, para hacerlo parecer completado o no completado. */

@@ -1,165 +1,176 @@
 body {
-font-family: sans-serif;
-background-image:url("https://github.com/EricDominici/To-do-list/blob/main/public/fondo.jpg?raw=true");
-
-
-
-
-
-background-size: cover;
-
-}
-*:first-letter {
-    text-transform: capitalize;
-}
-.roundBorder {
-    border-radius: 5px;
-   
-}
-input[name="taskText"]::placeholder {
-    color:  #cf9f86 
-}
-.newTaskText {
-    color: #cf9f86  ;
+    font-family: sans-serif;
+    background-image: url("https://github.com/EricDominici/To-do-list/blob/main/public/fondo.jpg?raw=true");
+    background-size: cover;
   }
-
-.list {
+  
+  *:first-letter {
+    text-transform: capitalize;
+  }
+  
+  .roundBorder {
+    border-radius: 5px;
+  }
+  
+  input[name="taskText"]::placeholder {
+    color:  #cf9f86;
+  }
+  
+  .newTaskText {
+    color: #cf9f86;
+  }
+  
+  .list {
     margin: 25px auto;
     padding: 25px;
-    background-color:   #cf9f86  ;
+    background-color: #cf9f86;
     width: 100%;
     max-width: 350px;
-}
-.date {
+  }
+  
+  .date {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color:     #561304 ;
-}
-.dateRight {
+    color: #561304;
+  }
+  
+  .dateRight {
     display: flex;
     align-items: center;
-}
-#dateNumber {
+  }
+  
+  #dateNumber {
     font-size: 50px;
-}
-#dateText {
+  }
+  
+  #dateText {
     letter-spacing: 3px;
     text-transform: uppercase;
-}
-#dateMonth,
-#dateNumber,
-#dateText  {
+  }
+  
+  #dateMonth,
+  #dateNumber,
+  #dateText {
     font-weight: bold;
-
-}
-form {
+  }
+  
+  form {
     margin: 20px 0;
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: auto 35px auto;
     grid-column-gap: 15px;
     grid-gap: 50px;
-
-}
-input {
+  }
+  
+  input {
     border: none;
     padding-left: 10px;
-    background-color:  #855c44 ;
-   
-
-}
-input:focus {
+    background-color:  #855c44;
+  }
+  
+  input:focus {
     outline: none;
-}
-
-.addTaskButton,
-.orderButton {
+  }
+  
+  .addTaskButton,
+  .orderButton {
     border: none;
     font-weight: bold;
     cursor: pointer;
-}
-
-.addTaskButton {
+  }
+  
+  .addTaskButton {
     height: 35px;
     border-radius: 50%;
     font-size: 18px;
-    background-color:   #855c44 ;
-    color:  #cf9f86  ;
-
-}
-
-.orderButton {
-    background-color:  #432412  ;
-    color:   #cf9f86    ;
-    
-}
-.task {
-    background-color:   #fad0b0  ;
+    background-color: #855c44;
+    color:  #cf9f86;
+  }
+  
+  .orderButton {
+    background-color:  #432412;
+    color:   #cf9f86;
+  }
+  
+  .task {
+    background-color:  #fad0b0;
     padding: 15px;
     margin-top: 15px;
-    color:   #5e3820  ;
+    color:  #5e3820;
     cursor: pointer;
     width: 92%;
     display: flex;
     justify-content: space-between;
     text-shadow: 2px 2px 4px rgba(179, 134, 105, 0.5);
-}
-
-.done {
-    background-color:    #855c44 ;
+  }
+  
+  .done {
+    background-color:  #855c44;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    color:  #fad0b0 ;
+    color:  #fad0b0;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     font-style: oblique;
     font-weight: bold;
+  }
   
-}
-
-
-.buttonsContainer{
+  .buttonsContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: baseline;
     align-content: space-around;
-}
-.buttonsContainerTask{
+  }
+  
+  .buttonsContainerTask {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-}
-
-.deleteTaskButton {
-    background-color:  #a56346 ;
+  }
+  
+  .deleteTaskButton {
+    background-color:  #a56346;
     border: none;
-    color:    #f9eadd  ;
-    text-decoration: none; 
+    color:  #f9eadd;
+    text-decoration: none;
     font-size: 16px;
     margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
     right: 40.3%;
-    
-}
-
-.completeTaskButton {
-    background-color:  #a56346 ;
+  }
+  
+  .completeTaskButton {
+    background-color:  #a56346;
     border: none;
-    color:   #f9eadd ;
-    text-decoration: none; 
+    color:  #f9eadd;
+    text-decoration: none;
     display: flex;
     font-size: 16px;
     margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
     right: 42%;
-}
-/* Estilos para el botón "Add Task" */
-.addTaskButton:hover {
+  }
+  
+  .editTaskButton {
+    display: none;
+    background-color: #a56346;
+    border: none;
+    color: #f9eadd;
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el botón "Add Task" */
+  .addTaskButton:hover {
     background-color: #6b4734;
     color: #bdaea1;
   }
@@ -181,19 +192,88 @@ input:focus {
     background-color: #658e41;
     color: #f0ddd4;
   }
-  .editTaskButton {
+  
+  /* Estilos para el modal del historial */
+  .modal {
     display: none;
-    background-color: #a56346;
-    border: none;
-    color: #f9eadd;
-    text-decoration: none;
-    font-size: 16px;
-    margin-left: 10px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    background-color: #fad0b0;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
     border-radius: 5px;
+    position: relative;
+  }
+  
+  .close {
+    color: #888;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .task {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+  }
+  
+  .task.done {
+    text-decoration: line-through;
+  }
+  
+  .task.deleted {
+    color: red;
+  }
+  
+  .modal-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .deleted-tasks-container {
+    margin-top: 10px;
   }
   
   .hidden {
     display: none;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .task {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+  }
+  
+  .task.done {
+    text-decoration: line-through;
+  }
+  
+  .task.deleted {
+    color: red;
   }
   
