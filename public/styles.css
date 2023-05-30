@@ -2,6 +2,10 @@ body {
 font-family: sans-serif;
 background-image:url("https://github.com/EricDominici/To-do-list/blob/main/public/fondo.jpg?raw=true");
 
+
+
+
+
 background-size: cover;
 
 }
@@ -189,4 +193,7 @@ input:focus {
     cursor: pointer;
   }
   
+  .hidden {
+    display: none;
+  }
   

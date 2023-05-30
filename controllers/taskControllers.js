@@ -1,19 +1,20 @@
-const taskSchema  = require("../model/task");//llamando
-exports.createTask = async(req, res) => {//crear las tareas
-    try{
-        let task;
-        task = new taskSchema(req.body)
-        await task.save();
-        res.send(task);     
-    }catch(error){
-        console.log(error);
-        res.status(500).send("La tarea no creada");
+const { Task } = require("../model/task"); // Ajustar la importación para utilizar Task en lugar de taskSchema
 
-    }
-}
+exports.createTask = async (req, res) => {
+  try {
+    let task;
+    task = new Task(req.body); // Utilizar el constructor del esquema de tarea correctamente
+    await task.save();
+    res.send(task);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("La tarea no pudo ser creada");
+  }
+};
+
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await taskSchema._id();
+    const tasks = await Task.find(); // Obtener todas las tareas utilizando el método find() del esquema de tarea
     res.json(tasks);
   } catch (error) {
     console.log(error);
@@ -21,15 +22,13 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-
 exports.deleteTask = async (req, res) => {
   try {
-    let task = await taskSchema.findById(req.params.taskId);
+    const task = await Task.findById(req.params.taskId); // Buscar la tarea por su ID utilizando el método findById() del esquema de tarea
     if (!task) {
       res.status(404).json({ msg: "La tarea no existe." });
     }
-   await taskSchema.findByIdAndRemove(req.params.taskId);
-
+    await task.deleteOne(); // Eliminar la tarea utilizando el método remove() del objeto de tarea
     res.json({ msg: "Tarea eliminada exitosamente." });
   } catch (error) {
     console.log(error);
@@ -39,20 +38,17 @@ exports.deleteTask = async (req, res) => {
 
 exports.updateTask = async (req, res) => {
   try {
-    let task = await taskSchema.findById(req.params.taskId);
+    const task = await Task.findByIdAndUpdate(
+      req.params.taskId,
+      { text: req.body.text },
+      { new: true }
+    ); // Actualizar la tarea utilizando el método findByIdAndUpdate() del esquema de tarea
     if (!task) {
       res.status(404).json({ msg: "La tarea no existe." });
     }
-    task.text = req.body.text;
-    task = await task.save();
     res.json(task);
   } catch (error) {
     console.log(error);
     res.status(500).send("Ha ocurrido un error en el servidor.");
   }
 };
-
-
-
-
-
