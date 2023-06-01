@@ -39,7 +39,7 @@ const addNewTask = event => {
     text: truncatedValue,
     completed: false
   };
-  
+
   // POST guarda
   fetch('/api/tasksPost', {
     method: 'POST',
@@ -73,8 +73,7 @@ const addNewTask = event => {
     console.log(error);
     // Handle error
   });
-};
-
+}
 const deleteTask = event => {
   event.stopPropagation();
   const task = event.target.closest('.task');
@@ -114,7 +113,8 @@ const deleteTask = event => {
 const completeTask = event => {
   event.stopPropagation();
   const task = event.target.closest('.task');
-  if (!task) return; // Verifica si el elemento de tarea es válido. Si no es válido, retorna sin hacer nada
+  task.classList.toggle('done');
+  if (!task) return;
 
   // Obtener el texto de la tarea completada
   const completedTaskText = task.textContent.trim();
@@ -123,7 +123,7 @@ const completeTask = event => {
   completedTasks.push(completedTaskText);
 
   // Enviar solicitud PUT para actualizar la tarea como completada en la base de datos
-  const taskId = task.dataset.taskId; //Envíe una solicitud PUT para actualizar la tarea como completada en la base de datos Suponiendo que establezca el ID de la tarea como un atributo de datos en el elemento de la tarea
+  const taskId = task.dataset.taskId;
   fetch(`/api/taskss/${taskId}`, {
     method: 'PUT',
     headers: {
@@ -144,7 +144,9 @@ const completeTask = event => {
     console.log(error);
     // Handle error
   });
+  
 };
+
 
 /* Esta función ordena visualmente las tareas incompletas al principio y las completadas al final en el contenedor de tareas,  */
 const renderOrderedTasks = () => {
@@ -163,6 +165,7 @@ const renderOrderedTasks = () => {
   toDo.forEach(task => tasksContainer.appendChild(task));
   done.forEach(task => tasksContainer.appendChild(task));
 };
+
 
 
 
@@ -208,9 +211,8 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// La función renderCompletedTasks renderiza las tareas completadas en el frontend
 
-// La función renderCompletedTasks renderiza las tareas completadas en el modal
+// enderiza las tareas completadas en el historial
 const renderCompletedTasks = () => {
   const completedTasksContainer = document.getElementById('completedTasksContainer');
   completedTasksContainer.innerHTML = '';
@@ -223,7 +225,7 @@ const renderCompletedTasks = () => {
   });
 };
 
-// La función renderDeletedTasks renderiza las tareas eliminadas en el modal
+//  renderiza las tareas eliminadas en el historial
 const renderDeletedTasks = () => {
   const deletedTasksContainer = document.getElementById('deletedTasksContainer');
   deletedTasksContainer.innerHTML = '';
@@ -235,7 +237,7 @@ const renderDeletedTasks = () => {
     deletedTasksContainer.appendChild(task);
   });
 };
-// La función renderToDoTasks renderiza las tareas incompletas (tareas pendientes) en el frontend
+//  renderiza las tareas incompletas (tareas pendientes) en el frontend
 const renderToDoTasks = () => {
   toDoTasks.forEach(task => {
     const truncatedValue = task.text.length > 35 ? task.text.substring(35, 0) + '...' : task.text;
