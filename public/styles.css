@@ -1,8 +1,7 @@
 html body {
   font-family: sans-serif;
-  background-image: url("https://github.com/EricDominici/To-do-list/blob/main/public/fondo.jpg?raw=true");
+  background-image: url("https://github.com/EricDominici/To-do-list/blob/main/public/backgrd.png?raw=true");
   background-size: cover;
-
 }
 
 *:first-letter {
@@ -14,17 +13,13 @@ html body {
 }
 
 input[name="taskText"]::placeholder {
-  color: #cf9f86;
-}
-
-.newTaskText {
-  color: #cf9f86;
+  color: #daa5ce;
 }
 
 .list {
   margin: 25px auto;
   padding: 25px;
-  background-color: #cf9f86;
+  background-color: #d8edf9;
   width: 100%;
   max-width: 420px;
 }
@@ -33,7 +28,7 @@ input[name="taskText"]::placeholder {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #561304;
+  color: #99c7eb;
 }
 
 .dateRight {
@@ -66,9 +61,9 @@ form {
 input {
   border: none;
   padding-left: 10px;
-  background-color: #855c44;
+  background-color: #f5dded;
   width: 100%;
-  color: #cf9f86;
+  color: #daa5ce;
 }
 
 input:focus {
@@ -86,20 +81,20 @@ input:focus {
   height: 35px;
   border-radius: 50%;
   font-size: 18px;
-  background-color: #855c44;
-  color: #cf9f86;
+  background-color: #f5dded;
+  color: #daa5ce;
 }
 
 .historyButton {
-  background-color: #432412;
-  color: #cf9f86;
+  background-color: #99c7eb;
+  color: #d8edf9;
 }
 
 .task {
-  background-color: #fad0b0;
+  background-color: #cdd6ed;
   padding: 15px;
   margin-top: 15px;
-  color: #5e3820;
+  color: #c9d7ee;
   cursor: pointer;
   width: 100%;
   display: flex;
@@ -107,16 +102,16 @@ input:focus {
   text-shadow: 2px 2px 4px rgba(179, 134, 105, 0.5);
   font-weight: bold;
 }
+
 .task.done {
   background-color: #432412;
   padding: 15px;
   margin-top: 15px;
-  color:  #fad0b0 ;
+  color: #fad0b0;
   cursor: pointer;
   width: 100%;
   display: flex;
   justify-content: space-between;
-
 }
 
 .buttonsContainer {
@@ -133,9 +128,9 @@ input:focus {
 .deleteTaskButton,
 .completeTaskButton,
 .editTaskButton {
-  background-color: #a56346;
+  background-color: #d8edf9;
   border: none;
-  color: #f9eadd;
+  color: #daa5ce;
   text-decoration: none;
   font-size: 16px;
   margin-left: 10px;
@@ -174,11 +169,11 @@ input:focus {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #c9957b46 ;
+  background-color: #d87ac246;
 }
 
 .modal-content {
-  background-color: #cf9f86;
+  background-color: #d87ac2;
   margin: 2% auto;
   padding: 20px;
   border: 1px solid #888;
@@ -190,21 +185,23 @@ input:focus {
   max-width: 80px;
   width: 90%;
 }
+
 .modal-title {
-  color:  #25130a;
+  color: #25130a;
   text-align: center;
   font-size: 24px;
   margin-bottom: 15px;
 }
+
 .hidden {
   display: none;
 }
+
 .custom-modal-dialog {
   max-width: 500px;
   width: 90%;
 }
 
-
 #myModalContent {
-  background-color: #cf9f86;
+  background-color: #d87ac2;
 }
