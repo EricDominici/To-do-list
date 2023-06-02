@@ -68,6 +68,7 @@ const addNewTask = event => {
 
     // Ordenar automáticamente las tareas
     renderOrderedTasks();
+    
   })
   .catch(error => {
     console.log(error);
@@ -100,6 +101,7 @@ const deleteTask = event => {
 
       // Ordenar automáticamente las tareas
       renderOrderedTasks();
+    
     } else {
       throw new Error('Failed to delete task');
     }
@@ -110,6 +112,7 @@ const deleteTask = event => {
   });
 };
 
+// Función para marcar una tarea como completada
 const completeTask = event => {
   event.stopPropagation();
   const task = event.target.closest('.task');
@@ -132,28 +135,23 @@ const completeTask = (event, taskId) => {
     .then(response => response.json())
     .then(updatedTask => {
       // Actualizar la tarea en el arreglo de tareas pendientes
-      toDoTasks = toDoTasks.map(task => {
-        if (task._id === taskId) {
-          return updatedTask;
-        }
-        return task;
-      });
+      toDoTasks = toDoTasks.filter(task => task._id !== taskId);
 
       // Mover la tarea completada al arreglo de tareas completadas
-      completedTasks.push(updatedTask);
+      completedTasksContainer.appendChild(task);
 
-      // Renderizar nuevamente las tareas
+      
+      // Renderizar nuevamente las tareas pendientes y completadas
       renderToDoTasks();
       renderCompletedTasks();
+      renderOrderedTasks();
     })
     .catch(error => {
       console.log(error);
       // Manejar el error
     });
 };
-
 };
-
 /* Esta función ordena visualmente las tareas incompletas al principio y las completadas al final en el contenedor de tareas,  */
 const renderOrderedTasks = () => {
   const done = [];
