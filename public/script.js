@@ -137,14 +137,14 @@ const completeTask = (event, taskId) => {
       // Actualizar la tarea en el arreglo de tareas pendientes
       toDoTasks = toDoTasks.filter(task => task._id !== taskId);
 
-      // Mover la tarea completada al arreglo de tareas completadas
-      completedTasksContainer.appendChild(task);
-
+       // Desplazar el contenedor de tareas hacia abajo cuando se completa una tarea
       
       // Renderizar nuevamente las tareas pendientes y completadas
       renderToDoTasks();
       renderCompletedTasks();
       renderOrderedTasks();
+      tasksContainer.scrollTop = tasksContainer.scrollHeight;
+
     })
     .catch(error => {
       console.log(error);
@@ -169,10 +169,6 @@ const renderOrderedTasks = () => {
   toDo.forEach(task => tasksContainer.appendChild(task));
   done.forEach(task => tasksContainer.appendChild(task));
 };
-
-
-
-
 // Al cargar la página, obtener las tareas completadas y eliminadas de la base de datos
 window.addEventListener('DOMContentLoaded', () => {
   // Obtener tareas completadas
