@@ -113,6 +113,7 @@ const deleteTask = event => {
 };
 
 // Función para marcar una tarea como completada
+// Función para marcar una tarea como completada
 const completeTask = event => {
   event.stopPropagation();
   const task = event.target.closest('.task');
@@ -120,38 +121,36 @@ const completeTask = event => {
   if (!task) return;
 
   // Obtener el texto de la tarea completada
-// Función para marcar una tarea como completada
-const completeTask = (event, taskId) => {
-  event.stopPropagation();
 
-  // Enviar solicitud PUT para marcar la tarea como completada en la base de datos
-  fetch(`/api/tasks/${taskId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ completed: true })
-  })
-    .then(response => response.json())
-    .then(updatedTask => {
-      // Actualizar la tarea en el arreglo de tareas pendientes
-      toDoTasks = toDoTasks.filter(task => task._id !== taskId);
+  // Función para marcar una tarea como completada
+  const completeTask = (event, taskId) => {
+    event.stopPropagation();
 
-       // Desplazar el contenedor de tareas hacia abajo cuando se completa una tarea
-      
-      // Renderizar nuevamente las tareas pendientes y completadas
-      renderToDoTasks();
-      renderCompletedTasks();
-      renderOrderedTasks();
-      tasksContainer.scrollTop = tasksContainer.scrollHeight;
-
+    // Enviar solicitud PUT para marcar la tarea como completada en la base de datos
+    fetch(`/api/tasks/${taskId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ completed: true })
     })
-    .catch(error => {
-      console.log(error);
-      // Manejar el error
-    });
+      .then(response => response.json())
+      .then(updatedTask => {
+        // Actualizar la tarea en el arreglo de tareas pendientes
+        toDoTasks = toDoTasks.filter(task => task._id !== taskId);
+        // Renderizar nuevamente las tareas pendientes y completadas
+        renderToDoTasks();
+        renderCompletedTasks();
+        renderOrderedTasks();
+        tasksContainer.scrollTop = tasksContainer.scrollHeight;
+      })
+      .catch(error => {
+        console.log(error);
+        // Manejar el error
+      });
+  };
 };
-};
+
 /* Esta función ordena visualmente las tareas incompletas al principio y las completadas al final en el contenedor de tareas,  */
 const renderOrderedTasks = () => {
   const done = [];
