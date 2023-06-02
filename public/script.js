@@ -117,36 +117,42 @@ const completeTask = event => {
   if (!task) return;
 
   // Obtener el texto de la tarea completada
-  const completedTaskText = task.textContent.trim();
+// Función para marcar una tarea como completada
+const completeTask = (event, taskId) => {
+  event.stopPropagation();
 
-  // Añadir el texto de la tarea completada al arreglo de tareas completadas
-  completedTasks.push(completedTaskText);
-
-  // Enviar solicitud PUT para actualizar la tarea como completada en la base de datos
-  const taskId = task.dataset.taskId;
-  fetch(`/api/taskss/${taskId}`, {
+  // Enviar solicitud PUT para marcar la tarea como completada en la base de datos
+  fetch(`/api/tasks/${taskId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ text: completedTaskText, completed: true })
+    body: JSON.stringify({ completed: true })
   })
-  .then(response => response.json())
-  .then(updatedTask => {
-    // Imprimir el texto de la tarea completada
-    console.log("Texto de la tarea completada:", completedTaskText);
-    tasksContainer.scrollTop = 0;
+    .then(response => response.json())
+    .then(updatedTask => {
+      // Actualizar la tarea en el arreglo de tareas pendientes
+      toDoTasks = toDoTasks.map(task => {
+        if (task._id === taskId) {
+          return updatedTask;
+        }
+        return task;
+      });
 
-    // Ordenar automáticamente las tareas
-    renderOrderedTasks();
-  })
-  .catch(error => {
-    console.log(error);
-    // Handle error
-  });
-  
+      // Mover la tarea completada al arreglo de tareas completadas
+      completedTasks.push(updatedTask);
+
+      // Renderizar nuevamente las tareas
+      renderToDoTasks();
+      renderCompletedTasks();
+    })
+    .catch(error => {
+      console.log(error);
+      // Manejar el error
+    });
 };
 
+};
 
 /* Esta función ordena visualmente las tareas incompletas al principio y las completadas al final en el contenedor de tareas,  */
 const renderOrderedTasks = () => {
@@ -268,12 +274,3 @@ tasksContainer.addEventListener('resize', () => {
   // Desplazar el contenedor de tareas hacia abajo cuando se cambia el tamaño
   tasksContainer.scrollTop = tasksContainer.scrollHeight;
 });
-
-
-
-
-
-
-
-
-
