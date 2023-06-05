@@ -50,5 +50,7 @@ exports.updateTask = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send("Ha ocurrido un error en el servidor.");
+  
   }
+  console.log(req.body)
 };

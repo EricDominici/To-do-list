@@ -119,6 +119,11 @@ input:focus {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .buttonsContainer {
@@ -176,7 +181,7 @@ input:focus {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #373f4871;
+  background-color: #7b828c70;
 }
 
 .modal-content {
@@ -237,3 +242,4 @@ input:focus {
     margin: 10% auto;
   }
 }
+

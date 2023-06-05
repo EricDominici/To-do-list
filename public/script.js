@@ -39,7 +39,6 @@ const addNewTask = event => {
     text: truncatedValue,
     completed: false
   };
-
   // POST guarda
   fetch('/api/tasksPost', {
     method: 'POST',
@@ -65,7 +64,6 @@ const addNewTask = event => {
     toDoTasks.push(savedTask);
     console.log(deletedTasks);
     tasksContainer.scrollTop = tasksContainer.scrollHeight;
-
     // Ordenar automáticamente las tareas
     renderOrderedTasks();
     
@@ -74,6 +72,7 @@ const addNewTask = event => {
     console.log(error);
     // Handle error
   });
+  
 }
 const deleteTask = event => {
   event.stopPropagation();
@@ -113,43 +112,42 @@ const deleteTask = event => {
 };
 
 // Función para marcar una tarea como completada
-// Función para marcar una tarea como completada
 const completeTask = event => {
-  event.stopPropagation();
   const task = event.target.closest('.task');
   task.classList.toggle('done');
   if (!task) return;
-
-  // Obtener el texto de la tarea completada
-
-  // Función para marcar una tarea como completada
-  const completeTask = (event, taskId) => {
-    event.stopPropagation();
-
-    // Enviar solicitud PUT para marcar la tarea como completada en la base de datos
-    fetch(`/api/tasks/${taskId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ completed: true })
+  // Obtener el ID de la tarea completada
+  const taskId = task.dataset.taskId;
+  // Enviar solicitud PUT para marcar la tarea como completada en la base de datos
+  fetch(`/api/tasks/${taskId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ completed: true })
+  })
+    .then(response => response.json())
+    .then(updatedTask => {
+      // Actualizar la tarea en el arreglo de tareas pendientes
+      toDoTasks = toDoTasks.filter(task => task._id !== taskId);
+      // Renderizar nuevamente las tareas pendientes y completadas
+      renderToDoTasks();
+      renderCompletedTasks();
+      renderOrderedTasks();
+      tasksContainer.scrollTop = tasksContainer.scrollHeight;
     })
-      .then(response => response.json())
-      .then(updatedTask => {
-        // Actualizar la tarea en el arreglo de tareas pendientes
-        toDoTasks = toDoTasks.filter(task => task._id !== taskId);
-        // Renderizar nuevamente las tareas pendientes y completadas
-        renderToDoTasks();
-        renderCompletedTasks();
-        renderOrderedTasks();
-        tasksContainer.scrollTop = tasksContainer.scrollHeight;
-      })
-      .catch(error => {
-        console.log(error);
-        // Manejar el error
-      });
-  };
+    .catch(error => {
+      console.log(error);
+      // Manejar el error
+    });
+
+  // Eliminar la tarea del contenedor después de 3 segundos
+  setTimeout(() => {
+    task.remove();
+  }, 1000);
+console.log("")
 };
+
 
 /* Esta función ordena visualmente las tareas incompletas al principio y las completadas al final en el contenedor de tareas,  */
 const renderOrderedTasks = () => {
@@ -158,7 +156,6 @@ const renderOrderedTasks = () => {
   tasksContainer.childNodes.forEach(el => {
     el.classList.contains('done') ? done.push(el) : toDo.push(el)
   });
-
   // Vaciar el contenedor de tareas
   while (tasksContainer.firstChild) {
     tasksContainer.removeChild(tasksContainer.firstChild);
@@ -167,6 +164,12 @@ const renderOrderedTasks = () => {
   // Agregar las tareas incompletas y completadas en el orden correcto
   toDo.forEach(task => tasksContainer.appendChild(task));
   done.forEach(task => tasksContainer.appendChild(task));
+  saveTasksToLocalStorage();
+};
+const saveTasksToLocalStorage = () => {
+  localStorage.setItem('toDoTasks', JSON.stringify(toDoTasks));
+  localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+  localStorage.setItem('deletedTasks', JSON.stringify(deletedTasks));
 };
 // Al cargar la página, obtener las tareas completadas y eliminadas de la base de datos
 window.addEventListener('DOMContentLoaded', () => {
@@ -207,6 +210,8 @@ window.addEventListener('DOMContentLoaded', () => {
     .catch(error => {
       console.log(error);
       // Handle error
+
+      
     });
 });
 
@@ -257,7 +262,7 @@ const renderToDoTasks = () => {
 const changeTaskState = event => {
   event.target.classList.toggle('done');
 
-  // Ordenar automáticamente las tareas
+  // Ordenar  las tareas
   renderOrderedTasks();
 };
 
