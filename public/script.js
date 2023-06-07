@@ -5,7 +5,9 @@ const dateYear = document.getElementById('dateYear');
 
 let completedTasks = [];
 let deletedTasks = [];
-let taskText = ''; // Variable para almacenar el texto de la tarea
+let taskText = ''; 
+let toDoTasks = []; // Variable para almacenar las tareas pendientes
+
 
 // Contenedor
 const tasksContainer = document.getElementById('tasksContainer');
@@ -90,36 +92,36 @@ const deleteTask = event => {
   fetch(`/api/tasksDelete/${taskId}`, {
     method: 'DELETE'
   })
-  .then(response => {
-    if (response.ok) {
-      task.remove();
+    .then(response => {
+      if (response.ok) {
+        task.remove();
 
-      // Imprimir el texto de la tarea eliminada
-      console.log("Texto de la tarea eliminada:", deletedTaskText);
-      tasksContainer.scrollTop = 0;
+        // Imprimir el texto de la tarea eliminada
+        console.log("Texto de la tarea eliminada:", deletedTaskText);
+        tasksContainer.scrollTop = 0;
 
-      // Ordenar automáticamente las tareas
-      renderOrderedTasks();
-    
-    } else {
-      throw new Error('Failed to delete task');
-    }
-  })
-  .catch(error => {
-    console.log(error);
-    // Handle error
-  });
+        // Ordenar automáticamente las tareas
+        renderOrderedTasks();
+
+      } else {
+        throw new Error('Failed to delete task');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      // Handle error
+    });
 };
-
 // Función para marcar una tarea como completada
 const completeTask = event => {
   const task = event.target.closest('.task');
-  task.classList.toggle('done');
   if (!task) return;
+
   // Obtener el ID de la tarea completada
   const taskId = task.dataset.taskId;
+
   // Enviar solicitud PUT para marcar la tarea como completada en la base de datos
-  fetch(`/api/tasks/${taskId}`, {
+  fetch(`/api/taskss/${taskId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -130,10 +132,15 @@ const completeTask = event => {
     .then(updatedTask => {
       // Actualizar la tarea en el arreglo de tareas pendientes
       toDoTasks = toDoTasks.filter(task => task._id !== taskId);
-      // Renderizar nuevamente las tareas pendientes y completadas
+
+      // Agregar la tarea completada al arreglo de tareas completadas
+      completedTasks.push(updatedTask.text);
+
+      // Renderizar nuevamente las tareas pendientes, completadas y ordenadas
       renderToDoTasks();
       renderCompletedTasks();
       renderOrderedTasks();
+
       tasksContainer.scrollTop = tasksContainer.scrollHeight;
     })
     .catch(error => {
@@ -141,21 +148,23 @@ const completeTask = event => {
       // Manejar el error
     });
 
+  // Cambiar la clase de la tarea para reflejar que está completada
+  task.classList.toggle('done');
+
   // Eliminar la tarea del contenedor después de 3 segundos
   setTimeout(() => {
     task.remove();
-  }, 1000);
-console.log("")
+  }, 3000);
 };
-
-
-/* Esta función ordena visualmente las tareas incompletas al principio y las completadas al final en el contenedor de tareas,  */
 const renderOrderedTasks = () => {
   const done = [];
   const toDo = [];
+
+  // Separar las tareas completadas y las tareas incompletas
   tasksContainer.childNodes.forEach(el => {
     el.classList.contains('done') ? done.push(el) : toDo.push(el)
   });
+
   // Vaciar el contenedor de tareas
   while (tasksContainer.firstChild) {
     tasksContainer.removeChild(tasksContainer.firstChild);
@@ -164,22 +173,19 @@ const renderOrderedTasks = () => {
   // Agregar las tareas incompletas y completadas en el orden correcto
   toDo.forEach(task => tasksContainer.appendChild(task));
   done.forEach(task => tasksContainer.appendChild(task));
-  saveTasksToLocalStorage();
+
+
 };
-const saveTasksToLocalStorage = () => {
-  localStorage.setItem('toDoTasks', JSON.stringify(toDoTasks));
-  localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
-  localStorage.setItem('deletedTasks', JSON.stringify(deletedTasks));
-};
+
 // Al cargar la página, obtener las tareas completadas y eliminadas de la base de datos
 window.addEventListener('DOMContentLoaded', () => {
-  // Obtener tareas completadas
   fetch('/api/tasksGest')
     .then(response => response.json())
     .then(tasks => {
-      completedTasks = tasks.map(task => task.text);
-      // Actualizar la lista de tareas completadas en el frontend
+      completedTasks = tasks.filter(task => task.completed).map(task => task.text);
+      toDoTasks = tasks.filter(task => !task.completed);
       renderCompletedTasks();
+      renderToDoTasks();
     })
     .catch(error => {
       console.log(error);
@@ -198,23 +204,7 @@ window.addEventListener('DOMContentLoaded', () => {
       console.log(error);
       // Handle error
     });
-
-  // Obtener tareas incompletas (tareas pendientes)
-  fetch('/api/tasksGest')
-    .then(response => response.json())
-    .then(tasks => {
-      toDoTasks = tasks.filter(task => !task.completed);
-      // Actualizar la lista de tareas incompletas en el frontend
-      renderToDoTasks();
-    })
-    .catch(error => {
-      console.log(error);
-      // Handle error
-
-      
-    });
-});
-
+})
 
 // enderiza las tareas completadas en el historial
 const renderCompletedTasks = () => {
@@ -243,7 +233,8 @@ const renderDeletedTasks = () => {
 };
 //  renderiza las tareas incompletas (tareas pendientes) en el frontend
 const renderToDoTasks = () => {
-  toDoTasks.forEach(task => {
+  const filteredTasks = toDoTasks.filter(task => !completedTasks.includes(task.text) && !deletedTasks.includes(task.text));
+  filteredTasks.forEach(task => {
     const truncatedValue = task.text.length > 35 ? task.text.substring(35, 0) + '...' : task.text;
     const taskElement = document.createElement('div');
     taskElement.classList.add('task', 'roundBorder');
@@ -257,6 +248,7 @@ const renderToDoTasks = () => {
     tasksContainer.appendChild(taskElement);
   });
 };
+
 
 /* Esta función cambia la clase de estilo de el elemento div de la tarea al hacer clic en él, para hacerlo parecer completado o no completado. */
 const changeTaskState = event => {

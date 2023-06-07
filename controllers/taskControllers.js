@@ -28,7 +28,7 @@ exports.deleteTask = async (req, res) => {
     if (!task) {
       res.status(404).json({ msg: "La tarea no existe." });
     }
-    await task.deleteOne(); // Eliminar la tarea utilizando el método remove() del objeto de tarea
+    await task.deleteOne(); // Eliminar la tarea utilizando el método deleteOne() del objeto de tarea
     res.json({ msg: "Tarea eliminada exitosamente." });
   } catch (error) {
     console.log(error);
@@ -38,19 +38,25 @@ exports.deleteTask = async (req, res) => {
 
 exports.updateTask = async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(
-      req.params.taskId,
-      { text: req.body.text },
-      { new: true }
-    ); // Actualizar la tarea utilizando el método findByIdAndUpdate() del esquema de tarea
-    if (!task) {
-      res.status(404).json({ msg: "La tarea no existe." });
+    const taskId = req.params.taskId; // Asegúrate de que el parámetro en la URL coincida con el nombre 'taskId'
+    
+    if (!taskId) {
+      return res.status(400).json({ msg: 'El ID de la tarea es requerido.' });
     }
-    res.json(task);
+
+    const updatedTask = await Task.findByIdAndUpdate(
+      taskId,
+      { $set: { completed: true } },
+      { new: true }
+    );
+
+    if (!updatedTask) {
+      return res.status(404).json({ msg: 'La tarea no existe.' });
+    }
+
+    res.json(updatedTask);
   } catch (error) {
     console.log(error);
-    res.status(500).send("Ha ocurrido un error en el servidor.");
-  
+    res.status(500).send('Ha ocurrido un error en el servidor.');
   }
-  console.log(req.body)
 };
