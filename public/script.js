@@ -68,6 +68,7 @@ const addNewTask = event => {
     tasksContainer.scrollTop = tasksContainer.scrollHeight;
     // Ordenar automáticamente las tareas
     renderOrderedTasks();
+    renderToDoTasks();
     
   })
   .catch(error => {
@@ -206,7 +207,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 })
 
-// enderiza las tareas completadas en el historial
+// renderiza las tareas completadas en el historial
 const renderCompletedTasks = () => {
   const completedTasksContainer = document.getElementById('completedTasksContainer');
   completedTasksContainer.innerHTML = '';
@@ -233,7 +234,13 @@ const renderDeletedTasks = () => {
 };
 //  renderiza las tareas incompletas (tareas pendientes) en el frontend
 const renderToDoTasks = () => {
-  const filteredTasks = toDoTasks.filter(task => !completedTasks.includes(task.text) && !deletedTasks.includes(task.text));
+  // Filtrar las tareas incompletas y evitar duplicados
+  const filteredTasks = [...new Set(toDoTasks.filter(task => !completedTasks.includes(task.text) && !deletedTasks.includes(task.text)))];
+
+  // Limpiar el contenedor de tareas
+  tasksContainer.innerHTML = '';
+
+  // Agregar las tareas incompletas filtradas al contenedor
   filteredTasks.forEach(task => {
     const truncatedValue = task.text.length > 35 ? task.text.substring(35, 0) + '...' : task.text;
     const taskElement = document.createElement('div');

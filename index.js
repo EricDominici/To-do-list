@@ -1,7 +1,4 @@
 const express = require('express');
-
-
-
 const conectarDB = require('./config/bd');
 
 //servidor

@@ -24,11 +24,11 @@ exports.getTasks = async (req, res) => {
 
 exports.deleteTask = async (req, res) => {
   try {
-    const task = await Task.findById(req.params.taskId); // Buscar la tarea por su ID utilizando el método findById() del esquema de tarea
+    const task = await Task.findById(req.params.taskId);
     if (!task) {
-      res.status(404).json({ msg: "La tarea no existe." });
+      return res.status(404).json({ msg: "La tarea no existe." });
     }
-    await task.deleteOne(); // Eliminar la tarea utilizando el método deleteOne() del objeto de tarea
+    await task.deleteOne();
     res.json({ msg: "Tarea eliminada exitosamente." });
   } catch (error) {
     console.log(error);
@@ -36,9 +36,10 @@ exports.deleteTask = async (req, res) => {
   }
 };
 
+
 exports.updateTask = async (req, res) => {
   try {
-    const taskId = req.params.taskId; // Asegúrate de que el parámetro en la URL coincida con el nombre 'taskId'
+    const taskId = req.params.taskId; 
     
     if (!taskId) {
       return res.status(400).json({ msg: 'El ID de la tarea es requerido.' });
