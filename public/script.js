@@ -61,17 +61,17 @@ const addNewTask = event => {
     });
 };
 
-const deleteTask = async (event) => {
+const deleteTask = async (event, id) => {
+
   event.stopPropagation();
+  debugger
   const task = event.target.closest('.task');
   if (!task) return;
-
-  const taskId = task.dataset.taskId;
-  const deletedTaskText = task.textContent.trim();
+  const deletedTaskText = task.textContent.trim();ç
   deletedTasks.push(deletedTaskText);
 
   try {
-    const response = await fetch(`/api/tasksDelete/${taskId}`, {
+    const response = await fetch(`/api/tasksDelete/${id}`, {
       method: 'DELETE'
     });
 
@@ -101,7 +101,8 @@ const completeTask = event => {
     .then(response => response.json())
     .then(updatedTask => {
       toDoTasks = toDoTasks.filter(task => task._id !== taskId);
-      completedTasks.push(updatedTask.text);
+    
+    completedTasks.push({text:updatedTask.text, taskId:taskId});
       renderToDoTasks();
       renderCompletedTasks();
       renderOrderedTasks();
@@ -119,7 +120,8 @@ window.addEventListener('DOMContentLoaded', () => {
   fetch('/api/tasksGest')
     .then(response => response.json())
     .then(tasks => {
-      completedTasks = tasks.filter(task => task.completed).map(task => task.text);
+      
+      completedTasks = tasks.filter(task => task.completed).map(task => ({text: task.text, taskId:task._id}));
       toDoTasks = tasks.filter(task => !task.completed);
       renderCompletedTasks();
       renderToDoTasks();
@@ -140,16 +142,16 @@ const renderOrderedTasks = () => {
   toDo.forEach(task => tasksContainer.appendChild(task));
   done.forEach(task => tasksContainer.appendChild(task));
 };
-const renderCompletedTasks = (taskId) => {
+const renderCompletedTasks = () => {
   const completedTasksContainer = document.getElementById('completedTasksContainer');
   completedTasksContainer.innerHTML = '';
 
-  completedTasks.forEach(taskText => {
+  completedTasks.forEach((result) => {
     const task = document.createElement('div');
     task.classList.add('task', 'roundBorder', 'done');
-    task.innerHTML = `${taskText}
+    task.innerHTML = `${result.text}
     <div class="buttonsContainerTask">
-    <button class="deleteTaskButton" onclick="deleteTask(event, '${taskId}')">x</button>
+    <button class="deleteTaskButton" onclick="deleteTask(event, '${result.taskId}')">x</button>
     </div>`;
     completedTasksContainer.appendChild(task);
   });
