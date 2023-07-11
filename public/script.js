@@ -50,7 +50,7 @@ const addNewTask = event => {
         </div>`;
       tasksContainer.prepend(task);
       event.target.reset();
-      task.dataset.taskId = savedTask._id; // Asignar el ID de la tarea al elemento HTML
+      task.dataset.taskId = savedTask._id;
       toDoTasks.push(savedTask);
       tasksContainer.scrollTop = tasksContainer.scrollHeight;
       renderOrderedTasks();
@@ -60,14 +60,12 @@ const addNewTask = event => {
       console.log(error);
     });
 };
-
 const deleteTask = async (event, id) => {
 
   event.stopPropagation();
-  debugger
   const task = event.target.closest('.task');
   if (!task) return;
-  const deletedTaskText = task.textContent.trim();ç
+  const deletedTaskText = task.textContent.trim();
   deletedTasks.push(deletedTaskText);
 
   try {
