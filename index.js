@@ -1,5 +1,5 @@
 const express = require('express');
-const conectarDB = require('./config/bd');
+const conectarDB = require('./API/config/bd');
 
 //servidor
 const app = express();
@@ -19,7 +19,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 //Router
-app.use('/api', require('./router/task'));
+app.use('/api', require('./API/router/task'));
 app.get('/', function (req, res) {
   res.send('Hola mundo:mariposa:');
 });

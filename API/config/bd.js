@@ -12,7 +12,7 @@ const conectarBD = async () => {
     console.log("Base de datos conectada");
   } catch (error) {
     console.log(error);
-    process.exit(1); // Detenemos la aplicación
+    process.exit(1);
   }
 };
 
