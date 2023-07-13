@@ -9,40 +9,24 @@
 </head>
 
 <body>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
-    const firebaseConfig = {
-      apiKey: "AIzaSyAXP9-DrPclBwBSoPXP5t0hbmE4K4Oh1Fg",
-      authDomain: "testlogin-66c4f.firebaseapp.com",
-      projectId: "testlogin-66c4f",
-      storageBucket: "testlogin-66c4f.appspot.com",
-      messagingSenderId: "988336407840",
-      appId: "1:988336407840:web:91f774f9aea5e956a00345",
-      measurementId: "G-CQ1YTWGMMV"
-    };
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
 
   <div class="list roundBorder">
     <div class="date">
       <div class="dateRight">
         <div id="dateNumber"></div>
-        <div>
           <div id="dateMonth"></div>
           <div id="dateYear"></div>
         </div>
       </div>
       <div id="dateText"></div>
     </div>
+
     <form onsubmit="addNewTask(event)">
       <input type="text" name="taskText" autocomplete="off" placeholder="Nueva tarea" class="roundBorder newTaskText">
       <button type="submit" class="addTaskButton">+</button>
       <button type="button" class="historyButton roundBorder" data-toggle="modal" data-target="#historyModal">Historial</button>
     </form>
+
     <div id="tasksContainer"></div>
   </div>
   <div class="modal" id="historyModal">
@@ -53,10 +37,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        
+
+      <div class="modal-body">    
         <div id="completedTasksContainer" ></div>
-        
         <div id="deletedTasksContainer"></div>
       </div>
     </div>

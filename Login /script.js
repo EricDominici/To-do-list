@@ -15,13 +15,28 @@ pwShowHide.forEach(eyeIcon => {
             password.type = "password";
             eyeIcon.classList.replace("bx-show", "bx-hide");
         })
+
+        fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: {
+               email,
+               password
+            }
+            .then(response => response.json())
+          })
+          .catch(error => {
+            console.log(error);
+          });
         
     })
 })      
 
 links.forEach(link => {
     link.addEventListener("click", e => {
-       e.preventDefault(); //preventing form submit
+       e.preventDefault(); 
        forms.classList.toggle("show-signup");
     })
 })
