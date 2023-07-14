@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "run" : "npm run dev"
+    "run": "npm run dev"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -19,6 +19,7 @@
     "mongoose": "^7.2.2",
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "stateful-controller-browser-router": "^1.2.0"
   }
 }

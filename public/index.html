@@ -9,24 +9,22 @@
 </head>
 
 <body>
-
   <div class="list roundBorder">
     <div class="date">
       <div class="dateRight">
         <div id="dateNumber"></div>
+        <div>
           <div id="dateMonth"></div>
           <div id="dateYear"></div>
         </div>
       </div>
       <div id="dateText"></div>
     </div>
-
     <form onsubmit="addNewTask(event)">
       <input type="text" name="taskText" autocomplete="off" placeholder="Nueva tarea" class="roundBorder newTaskText">
       <button type="submit" class="addTaskButton">+</button>
       <button type="button" class="historyButton roundBorder" data-toggle="modal" data-target="#historyModal">Historial</button>
     </form>
-
     <div id="tasksContainer"></div>
   </div>
   <div class="modal" id="historyModal">
@@ -37,9 +35,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-
-      <div class="modal-body">    
+      <div class="modal-body">
+        
         <div id="completedTasksContainer" ></div>
+        
         <div id="deletedTasksContainer"></div>
       </div>
     </div>
@@ -49,7 +48,5 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
-
 
 </html>

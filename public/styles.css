@@ -5,6 +5,7 @@ html body {
   background-repeat: no-repeat; 
   height: 100vh;
   width: 100vw; 
+
 }
 
 *:first-letter {
@@ -170,6 +171,8 @@ input:focus {
   background-color: #274906;
   color: #0d7412;
 }
+
+/* Estilos para el modal del historial */
 .modal {
   display: none;
   position: fixed;
@@ -240,4 +243,3 @@ input:focus {
     margin: 10% auto;
   }
 }
-
