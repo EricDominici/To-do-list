@@ -65,6 +65,7 @@ form{
 .field input{
     outline: none;
     padding: 0 15px;
+    color: rgb(157, 157, 157);
 }
 .field input:focus{
     border-bottom-width: 2px;
@@ -80,7 +81,7 @@ form{
     padding: 5px;
 }
 .field button{
-    color:  #7b828c ;
+    color:  #f2f7ff ;
     background-color: #485360 ;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -99,7 +100,7 @@ form{
     color:  #040508 
 }
 .form a{
-    color:  #373f48 ;
+    color:  #051424 ;
     text-decoration: none;
 }
 .form-content a:hover{

@@ -9,17 +9,42 @@
         <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>                      
     </head>
     <body>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+            import {getAuth } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js"
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+              apiKey: "AIzaSyAXP9-DrPclBwBSoPXP5t0hbmE4K4Oh1Fg",
+              authDomain: "testlogin-66c4f.firebaseapp.com",
+              projectId: "testlogin-66c4f",
+              storageBucket: "testlogin-66c4f.appspot.com",
+              messagingSenderId: "988336407840",
+              appId: "1:988336407840:web:91f774f9aea5e956a00345",
+              measurementId: "G-CQ1YTWGMMV"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            export const auth = getAuth(app)        
+            
+            </script>
+
         <section class="container forms">
             <div class="form login">
                 <div class="form-content">
                     <header>Login</header>
                     <form action="#">
                         <div class="field input-field">
-                            <input type="email" placeholder="Email" class="input">
+                            <input type="email" placeholder="Email" class="input" required>
                         </div>
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Password" class="password">
+                            <input type="password" placeholder="Password" class="password" required>
                             <i class='bx bx-hide eye-icon'></i>
                         </div>
 
@@ -28,7 +53,7 @@
                         </div>
 
                         <div class="field button-field">
-                            <button><a href="/public/index.html">Login</a></button>
+                            <button><a href="http://127.0.0.1:3001/public/index.html">Login</a></button>
                         </div>
                     </form>
 
@@ -60,22 +85,21 @@
             <div class="form signup">
                 <div class="form-content">
                     <header>Signup</header>
-                    <form action="#">
+                    <form action="#" id="signup-form">
                         <div class="field input-field">
-                            <input type="email" placeholder="Email" class="input">
+                            <input type="email" id="signup-email" placeholder="Email" class="input" required>
                         </div>
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Create password" class="password">
+                            <input type="password" id="signup-password" placeholder="Create password" class="password" required>
                         </div>
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Confirm password" class="password">
+                            <input type="password" id="signup-password2"placeholder="Confirm password" class="password" required>
                             <i class='bx bx-hide eye-icon'></i>
                         </div>
-
                         <div class="field button-field">
-                            <button>Signup</button>
+                            <button><a href="/public/index.html">Signup</a></button>
                         </div>
                     </form>
 
